@@ -1,4 +1,5 @@
 ﻿using ApiTemplate.Configuration;
+using ApiTemplate.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +21,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginModel login)
+    public IActionResult Login([FromBody] LoginDto login)
     {
         // Example check, please change this with whatever backend authorization you would prefer to use.
         if (login.Username != "admin" || login.Password != "password")
@@ -45,10 +46,4 @@ public class AuthenticationController : ControllerBase
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return Ok(new { token = tokenHandler.WriteToken(token) });
     }
-}
-
-public class LoginModel
-{
-    public string Username { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
 }
